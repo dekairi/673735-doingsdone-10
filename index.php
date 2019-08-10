@@ -42,6 +42,17 @@ $arr_tasks = [
         "is_done" => false
     ]
 ];
+
+function getQuantityOfProjectTasks($project_name, array $arr_tasks) {
+    $tasks_number = 0;
+
+    foreach ($arr_tasks as $task) {
+        if ($task["category"] === $project_name)
+            $tasks_number++;
+    }
+
+    return $tasks_number;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -86,7 +97,7 @@ $arr_tasks = [
                         <?php foreach ($arr_projects as $project_name): ?>
                         <li class="main-navigation__list-item">
                             <a class="main-navigation__list-item-link" href="#"><?=$project_name; ?></a>
-                            <span class="main-navigation__list-item-count">0</span>
+                            <span class="main-navigation__list-item-count"><?=getQuantityOfProjectTasks($project_name, $arr_tasks); ?></span>
                         </li>
                         <?php endforeach; ?>
                     </ul>
@@ -122,7 +133,7 @@ $arr_tasks = [
 
                 <table class="tasks">
                     <?php foreach ($arr_tasks as $task): ?>
-                    <tr class="tasks__item task <?=($task["is_done"]) ? "task--completed" : ""?>" <?=($task["is_done"] && ($show_complete_tasks === 0)) ? "style='display:none;'" : ""?>>
+                    <tr class="tasks__item task <?=($task["is_done"]) ? "task--completed" : ""?>" <?=($task["is_done"] && $show_complete_tasks === 0) ? "style='display:none;'" : ""?>>
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
                                 <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=($task["is_done"]) ? "checked" : ""?>>
