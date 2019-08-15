@@ -3,6 +3,7 @@
 require_once("helpers.php");
 
 $title = "Дела в порядке";
+$user_name = "Константин";
 $show_complete_tasks = rand(0, 1);
 $arr_projects = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
 $arr_tasks = [
@@ -55,7 +56,7 @@ function getQuantityOfProjectTasks($project_name, array $arr_tasks) {
     return $tasks_number;
 }
 
-$page_content = include_template("main.php", ["arr_tasks" => $arr_tasks, "arr_projects" => $arr_projects]);
-$layout_content = include_template("layout.php", ["content" => $page_content, "page_title" => $title]);
+$page_content = include_template("main.php", ["arr_tasks" => $arr_tasks, "arr_projects" => $arr_projects, "show_complete_tasks" => $show_complete_tasks]);
+$layout_content = include_template("layout.php", ["content" => $page_content, "page_title" => $title, "user_name" => $user_name]);
 
 print($layout_content);
