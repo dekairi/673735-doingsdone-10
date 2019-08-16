@@ -42,7 +42,7 @@
 
         <table class="tasks">
             <?php foreach ($arr_tasks as $task): ?>
-                <tr class="tasks__item task <?=(htmlspecialchars($task["is_done"])) ? "task--completed" : ""?>" <?=(htmlspecialchars($task["is_done"]) && $show_complete_tasks === 0) ? "style='display:none;'" : ""?>>
+                <tr class="tasks__item task <?=(htmlspecialchars($task["is_done"])) ? "task--completed" : ""?> <?=(isTaskImportant(htmlspecialchars($task["date_todo"]))) ? "task--important" : ""?>" <?=(htmlspecialchars($task["is_done"]) && $show_complete_tasks === 0) ? "style='display:none;'" : ""?>>
                     <td class="task__select">
                         <label class="checkbox task__checkbox">
                             <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=(htmlspecialchars($task["is_done"])) ? "checked" : ""?>>
@@ -54,7 +54,7 @@
                         <a class="download-link" href="#">Home.psd</a>
                     </td>
 
-                    <td class="task__date"><?=htmlspecialchars($task["date_done"]); ?></td>
+                    <td class="task__date"><?=htmlspecialchars($task["date_todo"]); ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>

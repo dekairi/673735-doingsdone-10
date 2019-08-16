@@ -9,41 +9,49 @@ $arr_projects = ["Входящие", "Учеба", "Работа", "Домашн
 $arr_tasks = [
     [
         "task_description" => "Собеседование в IT компании",
-        "date_done" => "01.12.2018",
+        "date_todo" => "01.12.2019",
         "category" => $arr_projects[2],
         "is_done" => false
     ],
     [
         "task_description" => "Выполнить тестовое задание",
-        "date_done" => "25.12.2018",
+        "date_todo" => "17.08.2019",
         "category" => $arr_projects[2],
         "is_done" => false
     ],
     [
         "task_description" => "Сделать задание первого раздела",
-        "date_done" => "21.12.2018",
+        "date_todo" => "16.12.2019",
         "category" => $arr_projects[1],
         "is_done" => true
     ],
     [
         "task_description" => "Встреча с другом",
-        "date_done" => "22.12.2018",
+        "date_todo" => "22.12.2019",
         "category" => $arr_projects[0],
         "is_done" => false
     ],
     [
         "task_description" => "Купить корм для кота",
-        "date_done" => "",
+        "date_todo" => "",
         "category" => $arr_projects[3],
         "is_done" => false
     ],
     [
         "task_description" => "Заказать пиццу",
-        "date_done" => "",
+        "date_todo" => "",
         "category" => $arr_projects[3],
         "is_done" => false
     ]
 ];
+
+function isTaskImportant($date_todo) {
+    $date = strtotime($date_todo);
+    $now = strtotime("now");
+    $diff = floor(($date - $now) / 3600);
+
+    return($diff <= 24 && $diff > 0 ? true : false);
+}
 
 function getQuantityOfProjectTasks($project_name, array $arr_tasks) {
     $tasks_number = 0;
