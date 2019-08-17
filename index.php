@@ -46,11 +46,17 @@ $arr_tasks = [
 ];
 
 function isTaskImportant($date_todo) {
+    $result = false;
+
     $date = strtotime($date_todo);
     $now = strtotime("now");
     $diff = floor(($date - $now) / 3600);
 
-    return($diff <= 24 && $diff > 0 ? true : false);
+    if ($diff <= 24 && $diff > 0) {
+        $result = true;
+    }
+
+    return $result;
 }
 
 function getQuantityOfProjectTasks($project_name, array $arr_tasks) {
