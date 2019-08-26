@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.7.23)
 # Database: doingsdone
-# Generation Time: 2019-08-18 1:42:04 PM +0000
+# Generation Time: 2019-08-26 11:15:49 AM +0000
 # ************************************************************
 
 
@@ -25,10 +25,13 @@
 
 CREATE TABLE `projects` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` text NOT NULL,
+  `title` char(255) NOT NULL DEFAULT '',
+  `user` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `title` (`title`(255))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `title` (`title`),
+  KEY `user` (`user`),
+  CONSTRAINT `user` FOREIGN KEY (`user`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 
 
@@ -42,9 +45,15 @@ CREATE TABLE `task` (
   `title` text NOT NULL,
   `file` text,
   `date_todo` datetime DEFAULT NULL,
+  `project` int(11) unsigned NOT NULL,
+  `user` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `title` (`title`(255))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `title` (`title`(255)),
+  KEY `category` (`project`),
+  KEY `author` (`user`),
+  CONSTRAINT `author` FOREIGN KEY (`user`) REFERENCES `user` (`id`),
+  CONSTRAINT `category` FOREIGN KEY (`project`) REFERENCES `projects` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 
 
@@ -58,7 +67,7 @@ CREATE TABLE `user` (
   `name` char(128) NOT NULL DEFAULT '',
   `password` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 
 
