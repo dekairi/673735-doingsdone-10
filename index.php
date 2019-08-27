@@ -2,48 +2,43 @@
 
 require_once("helpers.php");
 
+$link = mysqli_init();
+mysqli_options($link, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
+$connection = mysqli_connect("127.0.0.1:8889", "root", "root", "doingsdone");
+
+$user_name = "Ирина";
+$user = 0;
+
+if($connection == false)
+    print("Ошибка подключения: " . mysqli_connect_error());
+else {
+    mysqli_set_charset($connection, "utf8");
+
+    $arr_projects = getProjects($connection, $user);
+
+    $arr_tasks = getTasks($connection, $user);
+}
+
+function getTasks($conn, $user) {
+    $query_task = 'SELECT * FROM task WHERE user = ' . $user;
+    $result = mysqli_query($conn, $query_task);
+    if ($result) {
+        $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+    return $result;
+}
+
+function getProjects($conn, $user) {
+    $query_project = 'SELECT title from projects WHERE user = ' . $user;
+    $result_project = mysqli_query($conn, $query_project);
+    if ($result_project) {
+        $result_project = mysqli_fetch_all($result_project, MYSQLI_ASSOC);
+    }
+    return $result_project;
+}
+
 $title = "Дела в порядке";
-$user_name = "Константин";
 $show_complete_tasks = rand(0, 1);
-$arr_projects = ["Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
-$arr_tasks = [
-    [
-        "task_description" => "Собеседование в IT компании",
-        "date_todo" => "01.12.2019",
-        "category" => $arr_projects[2],
-        "is_done" => false
-    ],
-    [
-        "task_description" => "Выполнить тестовое задание",
-        "date_todo" => "17.08.2019",
-        "category" => $arr_projects[2],
-        "is_done" => false
-    ],
-    [
-        "task_description" => "Сделать задание первого раздела",
-        "date_todo" => "16.12.2019",
-        "category" => $arr_projects[1],
-        "is_done" => true
-    ],
-    [
-        "task_description" => "Встреча с другом",
-        "date_todo" => "22.12.2019",
-        "category" => $arr_projects[0],
-        "is_done" => false
-    ],
-    [
-        "task_description" => "Купить корм для кота",
-        "date_todo" => "",
-        "category" => $arr_projects[3],
-        "is_done" => false
-    ],
-    [
-        "task_description" => "Заказать пиццу",
-        "date_todo" => "",
-        "category" => $arr_projects[3],
-        "is_done" => false
-    ]
-];
 
 function isTaskImportant($date_todo) {
     $result = false;
