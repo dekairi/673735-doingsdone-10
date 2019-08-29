@@ -4,7 +4,7 @@ require_once("helpers.php");
 
 $link = mysqli_init();
 mysqli_options($link, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
-$connection = mysqli_connect("127.0.0.1:8889", "root", "root", "doingsdone");
+$connection = mysqli_connect("localhost:8889", "root", "root", "doingsdone");
 
 $user_name = "Ирина";
 $user = 0;
@@ -14,27 +14,20 @@ if($connection == false)
 else {
     mysqli_set_charset($connection, "utf8");
 
-    $arr_projects = getProjects($connection, $user);
+    $query_projects = 'SELECT title from projects WHERE user = ' . $user;
+    $query_tasks = 'SELECT * FROM task WHERE user = ' . $user;
 
-    $arr_tasks = getTasks($connection, $user);
+    $arr_projects = getInfoFromDatabase($connection, $query_projects);
+    $arr_tasks = getInfoFromDatabase($connection, $query_tasks);
 }
 
-function getTasks($conn, $user) {
-    $query_task = 'SELECT * FROM task WHERE user = ' . $user;
+function getInfoFromDatabase($conn, $sql_query) {
+    $query_task = $sql_query;
     $result = mysqli_query($conn, $query_task);
     if ($result) {
         $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
     return $result;
-}
-
-function getProjects($conn, $user) {
-    $query_project = 'SELECT title from projects WHERE user = ' . $user;
-    $result_project = mysqli_query($conn, $query_project);
-    if ($result_project) {
-        $result_project = mysqli_fetch_all($result_project, MYSQLI_ASSOC);
-    }
-    return $result_project;
 }
 
 $title = "Дела в порядке";
