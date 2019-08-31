@@ -6,8 +6,8 @@
             <ul class="main-navigation__list">
                 <?php foreach ($arr_projects as $project_name): ?>
                     <li class="main-navigation__list-item">
-                        <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($project_name); ?></a>
-                        <span class="main-navigation__list-item-count"><?=getQuantityOfProjectTasks(htmlspecialchars($project_name), $arr_tasks); ?></span>
+                        <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($project_name["title"]); ?></a>
+                        <span class="main-navigation__list-item-count"><?=getQuantityOfProjectTasks(htmlspecialchars($project_name["title"]), $arr_tasks); ?></span>
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -42,11 +42,11 @@
 
         <table class="tasks">
             <?php foreach ($arr_tasks as $task): ?>
-                <tr class="tasks__item task <?=($task["is_done"]) ? "task--completed" : ""?> <?=(isTaskImportant($task["date_todo"])) ? "task--important" : ""?>" <?=($task["is_done"] && $show_complete_tasks === 0) ? "style='display:none;'" : ""?>>
+                <tr class="tasks__item task <?=($task["status"]) ? "task--completed" : ""?> <?=(isTaskImportant($task["date_todo"])) ? "task--important" : ""?>" <?=($task["status"] && $show_complete_tasks === 0) ? "style='display:none;'" : ""?>>
                     <td class="task__select">
                         <label class="checkbox task__checkbox">
-                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=(htmlspecialchars($task["is_done"])) ? "checked" : ""?>>
-                            <span class="checkbox__text"><?=htmlspecialchars($task["task_description"]); ?></span>
+                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=(htmlspecialchars($task["status"])) ? "checked" : ""?>>
+                            <span class="checkbox__text"><?=htmlspecialchars($task["title"]); ?></span>
                         </label>
                     </td>
 
