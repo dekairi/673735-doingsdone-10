@@ -4,10 +4,10 @@
 
         <nav class="main-navigation">
             <ul class="main-navigation__list">
-                <?php foreach ($arr_projects as $project_name): ?>
-                    <li class="main-navigation__list-item">
-                        <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($project_name["title"]); ?></a>
-                        <span class="main-navigation__list-item-count"><?=getQuantityOfProjectTasks(htmlspecialchars($project_name["title"]), $arr_tasks); ?></span>
+                <?php foreach ($arr_projects as $key => $project): ?>
+                    <li class="main-navigation__list-item <?=$_GET['project_id'] === $project["id"] ? "main-navigation__list-item--active" : ""?>">
+                        <a class="main-navigation__list-item-link" href="<?="/index.php?project_id=" . $project["id"]; ?>"><?=htmlspecialchars($project["title"]); ?></a>
+                        <span class="main-navigation__list-item-count"><?=getQuantityOfProjectTasks($project["id"], $arr_all_tasks); ?></span>
                     </li>
                 <?php endforeach; ?>
             </ul>
