@@ -65,10 +65,10 @@ function isTaskImportant($date_todo) {
     return $result;
 }
 
-function getQuantityOfProjectTasks($project_name, $arr_tasks) {
+function getQuantityOfProjectTasks($project_id, $arr_tasks) {
     $tasks_number = 0;
     foreach ($arr_tasks as $task) {
-        if ($task["project"] == $project_name)
+        if ($task["project"] == $project_id && $task["status"] != 1)
             $tasks_number++;
         }
     return $tasks_number;
