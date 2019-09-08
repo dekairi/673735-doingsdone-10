@@ -17,9 +17,12 @@ else {
     $query_tasks = "";
     $query_projects = 'SELECT * FROM projects WHERE user = ' . $user;
     $query_all_tasks = 'SELECT * FROM task WHERE user = ' . $user;
+    $query_tasks = $query_all_tasks;
 
-    if (isset($_GET['project_id'])) {
-        $query_tasks = 'SELECT * FROM task WHERE user = ' . $user . ' AND project = ' . $_GET['project_id'];
+    if (isset($_GET['project_id']) && is_numeric($_GET['project_id'])) {
+        $query_tasks = $query_all_tasks . ' AND project = ' . $_GET['project_id'];
+    } else if (empty($_GET['project_id'])) {
+        $query_tasks = $query_all_tasks;
     } else {
         http_response_code(404);
         include('404.php');
