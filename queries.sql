@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: localhost (MySQL 5.7.23)
+# Host: 127.0.0.1 (MySQL 5.7.23)
 # Database: doingsdone
-# Generation Time: 2019-08-21 2:17:00 PM +0000
+# Generation Time: 2019-09-08 2:03:00 PM +0000
 # ************************************************************
 
 
@@ -23,59 +23,33 @@
 # Dump of table projects
 # ------------------------------------------------------------
 
-/*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-
 INSERT INTO `projects` (`title`, `user`)
 VALUES
-	('Входящие',0),
-	('Учеба',1),
-	('Работа',0),
-	('Домашние дела',0),
-	('Авто',1);
-
-/*!40000 ALTER TABLE `projects` ENABLE KEYS */;
-
+	('Входящие',1),
+	('Учеба',2),
+	('Работа',1),
+	('Домашние дела',1),
+	('Авто',2);
 
 # Dump of table task
 # ------------------------------------------------------------
 
-/*!40000 ALTER TABLE `task` DISABLE KEYS */;
-
 INSERT INTO `task` (`date_created`, `status`, `title`, `file`, `date_todo`, `project`, `user`)
 VALUES
-	('2017-08-19 00:00:00',0,'Собеседование в IT компании',NULL,'2019-12-01 00:00:00',2,0),
-	('2018-08-01 00:00:00',0,'Выполнить тестовое задание',NULL,'2019-08-24 00:00:00',2,0),
-	('2018-08-01 00:00:00',1,'Сделать задание первого раздела',NULL,'2019-12-16 00:00:00',1,1),
-	('2019-08-01 00:00:00',0,'Встреча с другом',NULL,'2019-12-22 00:00:00',0,0),
-	('2019-08-02 00:00:00',0,'Купить корм для кота\n',NULL,NULL,3,0),
-	('2019-08-04 00:00:00',0,'Заказать пиццу',NULL,NULL,3,0);
-
-/*!40000 ALTER TABLE `task` ENABLE KEYS */;
-
+	('2017-08-19',0,'Собеседование в IT компании',NULL,'2019-12-01',3,1),
+	('2018-08-01',0,'Выполнить тестовое задание',NULL,'2019-08-24',3,1),
+	('2018-08-01',1,'Сделать задание первого раздела',NULL,'2019-12-16',2,2),
+	('2019-08-01',0,'Встреча с другом',NULL,'2019-12-22',1,1),
+	('2019-08-02',1,'Купить корм для кота\n',NULL,NULL,4,1),
+	('2019-08-04',0,'Заказать пиццу и суши',NULL,NULL,4,1);
 
 # Dump of table user
 # ------------------------------------------------------------
 
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-
 INSERT INTO `user` (`register_date`, `email`, `name`, `password`)
 VALUES
-	('2016-06-19 00:00:00','someemail@somedomain.com','Ирина','1234'),
-	('2017-08-04 00:00:00','123@123.123','Дмитрий','5677');
-
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-
-# Get projects of user 0
-SELECT * FROM `projects` WHERE `user` = '0' LIMIT 0,1000;
-
-# Get list of task for project 3
-SELECT * FROM `task` WHERE `project` = '3' LIMIT 0,1000;
-
-# Mark task as done
-UPDATE `task` SET `status` = '1' WHERE `id` = '4';
-
-# Update task title
-UPDATE `task` SET `title` = 'Заказать пиццу и суши' WHERE `id` = '5';
+	('2017-08-04 00:00:00','123@123.123','Ирина','5677'),
+	('2019-10-14 00:00:00','767@474.484','Дмитрий','667к');
 
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
