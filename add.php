@@ -39,11 +39,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    $errors = array_filter($errors);
+    $file_path = "";
+    $file_url = "";
+
+    if (isset($_FILES["file"])) {
+        $file_name = $_FILES["file"]["name"];
+        $file_path = __DIR__ . "/uploads/";
+        $file_url = "/uploads/" . $file_name;
+
+        move_uploaded_file($_FILES["file"]["tmp_name"], $file_path . $file_name);
+    }
 
     if (count($errors)) {
-
+        $errors = array_filter($errors);
     }
+
+    if (count($errors) === 0) {
+        $task_name = $_POST["name"];
+        $task_project = $_POST["project"];
+        $task_date = empty($_POST["date"]) ? null : $_POST["date"];
+        $task_file = $file_url == "" ? null : $file_url;
+
+        $query_add_task = "INSERT INTO task (date_created, status, title, file, date_todo, project, user) VALUES (NOW(), 0, ?, ?, ?, ?, ?)";
+        $stmt = db_get_prepare_stmt($connection, $query_add_task, [$task_name, $task_file, $task_date, $task_project, $user]);
+        $res = mysqli_stmt_execute($stmt);
+        if ($res) {
+            header("Location: /");
+        } else {
+            print(mysqli_error($connection));
+        }
+    }
+
 }
 
 $form_content = include_template("form.php", [

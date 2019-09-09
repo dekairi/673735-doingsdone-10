@@ -20,7 +20,7 @@
     <main class="content__main">
         <h2 class="content__main-heading">Добавление задачи</h2>
 
-        <form class="form"  action="add.php" method="post" autocomplete="off">
+        <form class="form" action="add.php" method="post" autocomplete="off" enctype="multipart/form-data">
           <div class="form__row">
               <?php $classname = isset($errors["name"]) ? "form__input--error" : ""; ?>
             <label class="form__label" for="name">Название <sup>*</sup></label>

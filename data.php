@@ -66,6 +66,14 @@ function getInfoFromDatabase($conn, $sql_query) {
     return $result;
 }
 
+function insertDataToDatabase($conn, $sql_query, $data = []) {
+    $stmt = db_get_prepare_stmt($conn, $sql_query, $data);
+    $result = mysqli_stmt_execute($stmt);
+    if ($result) {
+
+    }
+}
+
 $title = "Дела в порядке";
 $show_complete_tasks = rand(0, 1);
 

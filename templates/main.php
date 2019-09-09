@@ -51,7 +51,7 @@
                     </td>
 
                     <td class="task__file">
-                        <a class="download-link" href="#">Home.psd</a>
+                        <a class="download-link" href="<?=$task["file"]; ?>">Download</a>
                     </td>
 
                     <td class="task__date"><?=htmlspecialchars($task["date_todo"]); ?></td>
