@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     foreach ($_POST as $key => $value) {
         if ($key == "date" && $value != NULL) {
-            var_dump(getDateDifference($value));
             if(!is_date_valid($value)) {
                 $errors[$key] = "Введите дату в корректном формате";
             } else if (getDateDifference($value) < -24) {

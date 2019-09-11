@@ -7,7 +7,6 @@ $connection = mysqli_connect("localhost:8889", "root", "root", "doingsdone");
 if($connection == false) {
     print("Ошибка подключения: " . mysqli_connect_error());
     die();
-}
-else {
+} else {
     mysqli_set_charset($connection, "utf8");
 }

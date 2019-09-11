@@ -26,9 +26,11 @@ function isProjectSelected($project_id) {
 
 function getInfoFromDatabase($conn, $sql_query) {
     $result = mysqli_query($conn, $sql_query);
+
     if ($result) {
         $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
     return $result;
 }
 
@@ -56,9 +58,11 @@ function isTaskImportant($date_todo) {
 
 function getQuantityOfProjectTasks($project_id, $arr_tasks) {
     $tasks_number = 0;
+
     foreach ($arr_tasks as $task) {
-        if ($task["project"] == $project_id && $task["status"] != 1)
+        if ($task["project"] == $project_id && $task["status"] != 1) {
             $tasks_number++;
         }
+    }
     return $tasks_number;
 }
