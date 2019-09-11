@@ -4,7 +4,7 @@ require_once("init.php");
 require_once("functions.php");
 require_once("helpers.php");
 require_once("data.php");
-require_once("logic.php");
+require_once("main-data.php");
 
 
 $title = "Дела в порядке";
