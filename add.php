@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if ($key == "project") {
-            if (!isProjectExist($_POST[$key], $connection)) {
+            if (!isProjectExist($_POST[$key], $connection, $user)) {
                 $errors[$key] = "Проект не существует";
             }
         }

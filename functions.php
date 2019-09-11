@@ -3,7 +3,7 @@ function getPostValue($name) {
     return $_POST[$name] ?? "";
 }
 
-function isProjectExist($project_id, $connection) {
+function isProjectExist($project_id, $connection, $user) {
     $result = false;
 
     $query_projects = 'SELECT * FROM projects WHERE user = ' . $user . ' AND id = ' . $project_id;
@@ -25,20 +25,11 @@ function isProjectSelected($project_id) {
 }
 
 function getInfoFromDatabase($conn, $sql_query) {
-    $query_task = $sql_query;
-    $result = mysqli_query($conn, $query_task);
+    $result = mysqli_query($conn, $sql_query);
     if ($result) {
         $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
     return $result;
-}
-
-function insertDataToDatabase($conn, $sql_query, $data = []) {
-    $stmt = db_get_prepare_stmt($conn, $sql_query, $data);
-    $result = mysqli_stmt_execute($stmt);
-    if ($result) {
-
-    }
 }
 
 function getDateDifference($date_in) {
