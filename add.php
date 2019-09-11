@@ -1,12 +1,11 @@
 <?php
-
+require_once("init.php");
+require_once("functions.php");
 require_once("helpers.php");
 require_once("data.php");
+require_once("logic.php");
 
-function getPostValue($name) {
-    return $_POST[$name] ?? "";
-}
-
+$title = "Добавить задачу";
 $required_fields = ["name", "project"];
 $errors = [];
 

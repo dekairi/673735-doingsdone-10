@@ -22,11 +22,11 @@
 
         <form class="form" action="add.php" method="post" autocomplete="off" enctype="multipart/form-data">
           <div class="form__row">
-              <?php $classname = isset($errors["name"]) ? "form__input--error" : ""; ?>
+              <?php $classname = isset($errors["name"]) ? "form__input--error" : "";?>
             <label class="form__label" for="name">Название <sup>*</sup></label>
 
             <input class="form__input <?=$classname; ?>" type="text" name="name" id="name" value="<?=getPostValue("name"); ?>" placeholder="Введите название">
-            <p class="form__message"><?=errors["name"] ?? ""; ?></p>
+            <p class="form__message"><?=$errors["name"] ?? ""; ?></p>
           </div>
 
           <div class="form__row">
@@ -38,7 +38,7 @@
                 <option value="<?=$project["id"]; ?>" <?=isProjectSelected($project["id"]) ? "selected" : ""; ?>><?=$project["title"]; ?></option>
             <?php endforeach; ?>
             </select>
-            <p class="form__message"><?=errors["project"] ?? ""; ?></p>
+            <p class="form__message"><?=$errors["project"] ?? ""; ?></p>
           </div>
 
           <div class="form__row">
@@ -46,7 +46,7 @@
             <label class="form__label" for="date">Дата выполнения</label>
 
             <input class="form__input form__input--date <?=$classname; ?>" type="text" name="date" id="date" value="<?=getPostValue("date"); ?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
-            <p class="form__message"><?=errors["date"] ?? ""; ?></p>
+            <p class="form__message"><?=$errors["date"] ?? ""; ?></p>
           </div>
 
           <div class="form__row">
