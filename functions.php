@@ -9,8 +9,9 @@ function isProjectExist($project_id, $connection) {
     $query_projects = 'SELECT * FROM projects WHERE user = ' . $user . ' AND id = ' . $project_id;
     $arr_projects = getInfoFromDatabase($connection, $query_projects);
 
-    if (count($arr_projects) !== 0)
+    if ($arr_projects) {
         $result = true;
+    }
 
     return $result;
 }
