@@ -3,6 +3,19 @@ function getPostValue($name) {
     return $_POST[$name] ?? "";
 }
 
+function isEmailExist($email, $connection) {
+    $result = false;
+
+    $query_emails = 'SELECT * FROM user WHERE email = "' . $email . '"';
+    $arr_emails = getInfoFromDatabase($connection, $query_emails);
+
+    if ($arr_emails) {
+        $result = true;
+    }
+
+    return $result;
+}
+
 function isProjectExist($project_id, $connection, $user) {
     $result = false;
 
@@ -17,11 +30,7 @@ function isProjectExist($project_id, $connection, $user) {
 }
 
 function isProjectSelected($project_id) {
-    if($_POST["project"] == $project_id) {
-        return true;
-    } else {
-        return false;
-    }
+    return $_POST["project"] == $project_id;
 }
 
 function getInfoFromDatabase($conn, $sql_query) {
