@@ -26,14 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    if (count($errors)) {
-        $errors = array_filter($errors);
-    }
-
     if (count($errors) === 0) {
         $user_name = $_POST["name"];
         $user_email = $_POST["email"];
-        $user_password = $_POST["password"];
+        $user_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
         $query_add_user = "INSERT INTO user (register_date, email, name, password) VALUES (NOW(), ?, ?, ?)";
         $stmt = db_get_prepare_stmt($connection, $query_add_user, [$user_email, $user_name, $user_password]);
