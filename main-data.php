@@ -1,24 +1,44 @@
 <?php
-$query_tasks = "";
-$query_projects = 'SELECT * FROM projects WHERE user = ' . $user;
-$query_all_tasks = 'SELECT * FROM task WHERE user = ' . $user;
-$query_tasks = $query_all_tasks;
-
-if (isset($_GET['project_id']) && is_numeric($_GET['project_id'])) {
-    $query_tasks = $query_all_tasks . ' AND project = ' . $_GET['project_id'];
-} else if (empty($_GET['project_id'])) {
-    $query_tasks = $query_all_tasks;
-} else {
-    http_response_code(404);
-    include('404.php');
-    die();
+function getProjectsQuery($user) {
+    return 'SELECT * FROM projects WHERE user = ' . $user;
 }
 
-$arr_projects = getInfoFromDatabase($connection, $query_projects);
-$arr_all_tasks = getInfoFromDatabase($connection, $query_all_tasks);
-$arr_tasks = getInfoFromDatabase($connection, $query_tasks);
+function getAllTasksQuery($user) {
+    return 'SELECT * FROM task WHERE user = ' . $user;
+}
+
+function getTasksQuery($user) {
+    $query_tasks = getAllTasksQuery($user);
+
+    if (isset($_GET['project_id']) && is_numeric($_GET['project_id'])) {
+        $query_tasks = getAllTasksQuery($user) . ' AND project = ' . $_GET['project_id'];
+    } else if (empty($_GET['project_id'])) {
+        $query_tasks = getAllTasksQuery($user);
+    } else {
+        http_response_code(404);
+        include('404.php');
+        die();
+    }
+
+    return $query_tasks;
+}
+
+$arr_projects = getInfoFromDatabase($connection, getProjectsQuery($user));
+$arr_all_tasks = getInfoFromDatabase($connection, getAllTasksQuery($user));
+$arr_tasks = getInfoFromDatabase($connection, getTasksQuery($user));
 
 if (count($arr_tasks) === 0) {
     $query_tasks = 'SELECT * FROM task WHERE user = ' . $user;
     $arr_tasks = getInfoFromDatabase($connection, $query_tasks);
+}
+
+function generateUserData($connection, $user) {
+    $arr_projects = getInfoFromDatabase($connection, getProjectsQuery($user));
+    $arr_all_tasks = getInfoFromDatabase($connection, getAllTasksQuery($user));
+    $arr_tasks = getInfoFromDatabase($connection, getTasksQuery($user));
+
+    if (count($arr_tasks) === 0) {
+        $query_tasks = 'SELECT * FROM task WHERE user = ' . $user;
+        $arr_tasks = getInfoFromDatabase($connection, $query_tasks);
+    }
 }

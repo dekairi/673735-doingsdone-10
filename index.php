@@ -1,5 +1,4 @@
 <?php
-
 require_once("init.php");
 require_once("functions.php");
 require_once("helpers.php");
@@ -8,6 +7,13 @@ require_once("main-data.php");
 
 
 $title = "Дела в порядке";
+
+if ($_SESSION['user_id']) {
+    generateUserData($connection, $user);
+} else {
+    header("Location: guest.php");
+    exit();
+}
 
 $page_content = include_template("main.php", [
     "arr_tasks" => $arr_tasks,
