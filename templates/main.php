@@ -52,7 +52,7 @@
 
                     <td class="task__file">
                         <?php $current_file_path = $task["file"]; ?>
-                        <?=$task["file"] ? '<a class="download-link" href="' . $current_file_path . '">Download</a>' : ''; ?>
+                        <?=$task["file"] !== '/uploads/' && $task["file"] !== NULL ? '<a class="download-link" href="' . $current_file_path . '">Download</a>' : ''; ?>
                     </td>
 
                     <td class="task__date"><?=htmlspecialchars($task["date_todo"]); ?></td>
