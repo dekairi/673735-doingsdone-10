@@ -4,7 +4,7 @@ require_once("functions.php");
 require_once("helpers.php");
 require_once("data.php");
 
-$title = "Авторизация";
+$title = "Дела в порядке";
 $required_fields = ["email", "password"];
 $errors = [];
 
@@ -39,9 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-$auth_content = include_template("auth.php", [
+$guest_content = include_template("guest.php", [
     "errors" => $errors
 ]);
-$layout_content = include_template("layout.php", ["content" => $auth_content, "page_title" => $title]);
+$layout_content = include_template("layout.php", ["content" => $guest_content, "page_title" => $title]);
 
 print($layout_content);

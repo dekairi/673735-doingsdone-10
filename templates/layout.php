@@ -27,11 +27,11 @@
                             <div class="user-menu__data">
                                 <p>' . htmlspecialchars($user_name) . '</p>
 
-                                <a href="#">Выйти</a>
+                                <a href="../logout.php">Выйти</a>
                             </div>
                         </div>');
                     } else {
-                        print('<a class="main-header__side-item button button--transparent" href="form-authorization.html">Войти</a>');
+                        print('<a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>');
                     }
                 ?>
             </div>
@@ -48,9 +48,10 @@
 
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
-
-        <a class="main-footer__button button button--plus" href="../add.php">Добавить задачу</a>
-
+        <?php if ($user_name) {
+            print('<a class="main-footer__button button button--plus" href="../add.php">Добавить задачу</a>');
+        }
+        ?>
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
             <a class="social__link social__link--facebook" href="#">

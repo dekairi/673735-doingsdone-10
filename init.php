@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 date_default_timezone_set("Europe/Moscow");
 $link = mysqli_init();
 mysqli_options($link, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
