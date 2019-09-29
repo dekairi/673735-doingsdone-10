@@ -20,28 +20,23 @@ if ($_SESSION['user_id']) {
         "user" => $user
     ]);
 
-    if (isset($_GET['show_completed'])) {
-        $show_completed = intval($_GET['show_completed']) ?? null;
-        if ($show_completed !== null) {
-            $_SESSION['show_complete_tasks'] = $show_completed;
-            header("Location: /index.php");
-        }
-    }
-
-    if (isset($_GET['check']) && isset($_GET['task_id'])) {
+    if (isset($_GET['check']) && isset($_GET['task_id']) && is_numeric($_GET['task_id'])) {
         $task_id = intval($_GET['task_id']) ?? null;
-        $is_checked = intval($_GET['check']) ?? null;
+        $task_status_query = 'SELECT status FROM task WHERE id=' . $task_id;
+        $task_current_status = getInfoFromDatabase($connection, $task_status_query);
+        $current_status = intval($task_current_status[0]["status"]);
+        $new_status = !$current_status;
         if (!$task_id) {
             header("Location: /index.php");
             exit;
         }
-        mysqli_query($con, "START TRANSACTION");
-        $sql = "UPDATE tasks SET task_status = '$is_checked' WHERE task_id = '$task_id'";
-        $update_result = mysqli_query($con, $sql);
+        mysqli_query($connection, "START TRANSACTION");
+        $sql = 'UPDATE task SET status=' . $new_status . ' WHERE id=' . $task_id;
+        $update_result = mysqli_query($connection, $sql);
         if ($update_result) {
-            mysqli_query($con, "COMMIT");
+            mysqli_query($connection, "COMMIT");
         } else {
-            mysqli_query($con, "ROLLBACK");
+            mysqli_query($connection, "ROLLBACK");
         }
 
         header("Location: /index.php");
@@ -62,7 +57,7 @@ if ($_SESSION['user_id']) {
                     break;
                 case "outofdate":
                     $date = changeDateFormat("now", 'Y-m-d');
-                    $sql_filter_tasks = 'SELECT * FROM task WHERE user=' . $user . ' AND date_todo < "' . $date . '" AND status = 0';
+                    $sql_filter_tasks = 'SELECT * FROM task WHERE user=' . $user . ' AND date_todo < "' . $date . '"';
                     break;
             }
         }
@@ -97,6 +92,14 @@ if ($_SESSION['user_id']) {
                 "arr_all_tasks" => $arr_all_tasks,
                 "user" => $user
             ]);
+        }
+    }
+
+    if (isset($_GET['show_completed'])) {
+        $show_completed = intval($_GET['show_completed']) ?? null;
+        if ($show_completed !== null) {
+            $_SESSION['show_complete_tasks'] = $show_completed;
+            header("Location: /index.php");
         }
     }
 } else {

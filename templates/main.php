@@ -41,13 +41,15 @@
         </div>
 
         <table class="tasks">
-            <?php if (count($arr_tasks) != 0): ?>
+            <?php if (empty($arr_tasks) && isset($_POST['q'])): ?>
+                <div>Ничего не найдено по вашему запросу</div>
+            <?php else: ?>
             <?php foreach ($arr_tasks as $task): ?>
                 <tr class="tasks__item task <?=($task["status"]) ? "task--completed" : ""?> <?=(isTaskImportant($task["date_todo"])) ? "task--important" : ""?>" <?=($task["status"] && intval($_SESSION['show_complete_tasks']) === 0) ? "style='display:none;'" : "" ?>>
                     <td class="task__select">
                         <label class="checkbox task__checkbox">
-                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=(htmlspecialchars($task["status"])) ? "checked" : ""?>>
-                            <span class="checkbox__text"><?=htmlspecialchars($task["title"]); ?></span>
+                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?=$task["id"];?>" <?=$task["status"] ? "checked" : "";?>>
+                            <span class="checkbox__text"><?=htmlspecialchars($task["title"]);?></span>
                         </label>
                     </td>
 
@@ -59,8 +61,6 @@
                     <td class="task__date"><?=htmlspecialchars($task["date_todo"]); ?></td>
                 </tr>
             <?php endforeach; ?>
-        <?php else: ?>
-            <div>Ничего не найдено по вашему запросу</div>
         <?php endif; ?>
         </table>
     </main>
