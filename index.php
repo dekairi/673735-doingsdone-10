@@ -22,7 +22,7 @@ if ($_SESSION['user_id']) {
 
     if (isset($_GET['task_id'])) {
         $task_id = intval($_GET['task_id']) ?? null;
-        $task_status_query = 'SELECT status FROM task WHERE id=' . $task_id;
+        $task_status_query = 'SELECT status FROM task WHERE id=' . $task_id . ' AND user=' . $user;
         $task_current_status = getInfoFromDatabase($connection, $task_status_query);
         $current_status = intval($task_current_status[0]["status"]);
         $new_status = intval(!$current_status);
