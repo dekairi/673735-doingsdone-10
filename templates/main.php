@@ -28,22 +28,22 @@
 
         <div class="tasks-controls">
             <nav class="tasks-switch">
-                <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-                <a href="/" class="tasks-switch__item">Повестка дня</a>
-                <a href="/" class="tasks-switch__item">Завтра</a>
-                <a href="/" class="tasks-switch__item">Просроченные</a>
-            </nav>
+           <a href="/" class="tasks-switch__item <?= (!isset($_GET['filter'])) ? "tasks-switch__item--active" : ""; ?>">Все задачи</a>
+           <a href="/?filter=today" class="tasks-switch__item <?= (htmlspecialchars($_GET['filter']) == "today") ? "tasks-switch__item--active" : ""; ?>">Повестка дня</a>
+           <a href="/?filter=tomorrow" class="tasks-switch__item <?= (htmlspecialchars($_GET['filter']) == "tomorrow") ? "tasks-switch__item--active" : ""; ?>">Завтра</a>
+           <a href="/?filter=outofdate" class="tasks-switch__item <?= (htmlspecialchars($_GET['filter']) == "outofdate") ? "tasks-switch__item--active" : ""; ?>">Просроченные</a>
+       </nav>
 
-            <label class="checkbox">
-                <input class="checkbox__input visually-hidden show_completed" type="checkbox"<?=($show_complete_tasks === 1) ? "checked" : ""?>>
-                <span class="checkbox__text">Показывать выполненные</span>
-            </label>
+       <label class="checkbox">
+           <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?=(intval($_SESSION['show_complete_tasks']) == 1) ? "checked" : ""; ?>>
+           <span class="checkbox__text">Показывать выполненные</span>
+       </label>
         </div>
 
         <table class="tasks">
             <?php if (count($arr_tasks) != 0): ?>
             <?php foreach ($arr_tasks as $task): ?>
-                <tr class="tasks__item task <?=($task["status"]) ? "task--completed" : ""?> <?=(isTaskImportant($task["date_todo"])) ? "task--important" : ""?>" <?=($task["status"] && $show_complete_tasks === 0) ? "style='display:none;'" : ""?>>
+                <tr class="tasks__item task <?=($task["status"]) ? "task--completed" : ""?> <?=(isTaskImportant($task["date_todo"])) ? "task--important" : ""?>" <?=($task["status"] && intval($_SESSION['show_complete_tasks']) === 0) ? "style='display:none;'" : "" ?>>
                     <td class="task__select">
                         <label class="checkbox task__checkbox">
                             <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=(htmlspecialchars($task["status"])) ? "checked" : ""?>>

@@ -3,6 +3,12 @@ function getPostValue($name) {
     return $_POST[$name] ?? "";
 }
 
+function changeDateFormat($date, $format)
+{
+    $new_date = date_create($date);
+    return date_format($new_date, $format);
+}
+
 function isEmailExist($email, $connection) {
     $result = false;
 
