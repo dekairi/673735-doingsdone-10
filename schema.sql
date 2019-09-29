@@ -31,3 +31,5 @@ CREATE TABLE `user` (
   `name` char(128) NOT NULL DEFAULT '',
   `password` text NOT NULL
 );
+
+CREATE FULLTEXT INDEX task_search ON task(title);

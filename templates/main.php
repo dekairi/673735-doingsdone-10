@@ -21,7 +21,7 @@
         <h2 class="content__main-heading">Список задач</h2>
 
         <form class="search-form" action="index.php" method="post" autocomplete="off">
-            <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+            <input class="search-form__input" type="text" name="q" value="<?=getPostValue('q');?>" placeholder="Поиск по задачам">
 
             <input class="search-form__submit" type="submit" name="" value="Искать">
         </form>
@@ -41,6 +41,7 @@
         </div>
 
         <table class="tasks">
+            <?php if (count($arr_tasks) != 0): ?>
             <?php foreach ($arr_tasks as $task): ?>
                 <tr class="tasks__item task <?=($task["status"]) ? "task--completed" : ""?> <?=(isTaskImportant($task["date_todo"])) ? "task--important" : ""?>" <?=($task["status"] && $show_complete_tasks === 0) ? "style='display:none;'" : ""?>>
                     <td class="task__select">
@@ -52,12 +53,15 @@
 
                     <td class="task__file">
                         <?php $current_file_path = $task["file"]; ?>
-                        <?=$task["file"] ? '<a class="download-link" href="' . $current_file_path . '">Download</a>' : ''; ?>
+                        <?=$task["file"] !== '/uploads/' && $task["file"] !== NULL ? '<a class="download-link" href="' . $current_file_path . '">Download</a>' : ''; ?>
                     </td>
 
                     <td class="task__date"><?=htmlspecialchars($task["date_todo"]); ?></td>
                 </tr>
             <?php endforeach; ?>
+        <?php else: ?>
+            <div>Ничего не найдено по вашему запросу</div>
+        <?php endif; ?>
         </table>
     </main>
 </div>
