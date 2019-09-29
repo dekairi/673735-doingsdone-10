@@ -1,0 +1,9 @@
+{
+    "name": "foaxdev/doingsdone",
+    "description": "Website for todo lists",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "swiftmailer/swiftmailer": "6.2.1"
+    }
+}
