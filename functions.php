@@ -29,6 +29,19 @@ function isProjectExist($project_id, $connection, $user) {
     return $result;
 }
 
+function isProjectExistByName($project_name, $connection, $user) {
+    $result = false;
+
+    $query_projects = 'SELECT * FROM projects WHERE user = ' . $user . ' AND title = "' . $project_name . '"';
+    $arr_projects = getInfoFromDatabase($connection, $query_projects);
+
+    if ($arr_projects) {
+        $result = true;
+    }
+
+    return $result;
+}
+
 function isProjectSelected($project_id) {
     return $_POST["project"] == $project_id;
 }
