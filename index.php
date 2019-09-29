@@ -20,12 +20,12 @@ if ($_SESSION['user_id']) {
         "user" => $user
     ]);
 
-    if (isset($_GET['check']) && isset($_GET['task_id']) && is_numeric($_GET['task_id'])) {
+    if (isset($_GET['task_id'])) {
         $task_id = intval($_GET['task_id']) ?? null;
         $task_status_query = 'SELECT status FROM task WHERE id=' . $task_id;
         $task_current_status = getInfoFromDatabase($connection, $task_status_query);
         $current_status = intval($task_current_status[0]["status"]);
-        $new_status = !$current_status;
+        $new_status = intval(!$current_status);
         if (!$task_id) {
             header("Location: /index.php");
             exit;
