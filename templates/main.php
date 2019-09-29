@@ -41,6 +41,7 @@
         </div>
 
         <table class="tasks">
+            <?php if (count($arr_tasks) != 0): ?>
             <?php foreach ($arr_tasks as $task): ?>
                 <tr class="tasks__item task <?=($task["status"]) ? "task--completed" : ""?> <?=(isTaskImportant($task["date_todo"])) ? "task--important" : ""?>" <?=($task["status"] && $show_complete_tasks === 0) ? "style='display:none;'" : ""?>>
                     <td class="task__select">
@@ -58,6 +59,9 @@
                     <td class="task__date"><?=htmlspecialchars($task["date_todo"]); ?></td>
                 </tr>
             <?php endforeach; ?>
+        <?php else: ?>
+            <div>Ничего не найдено по вашему запросу</div>
+        <?php endif; ?>
         </table>
     </main>
 </div>
