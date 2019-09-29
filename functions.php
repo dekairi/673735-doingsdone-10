@@ -3,6 +3,12 @@ function getPostValue($name) {
     return $_POST[$name] ?? "";
 }
 
+function changeDateFormat($date, $format)
+{
+    $new_date = date_create($date);
+    return date_format($new_date, $format);
+}
+
 function isEmailExist($email, $connection) {
     $result = false;
 
@@ -20,6 +26,19 @@ function isProjectExist($project_id, $connection, $user) {
     $result = false;
 
     $query_projects = 'SELECT * FROM projects WHERE user = ' . $user . ' AND id = ' . $project_id;
+    $arr_projects = getInfoFromDatabase($connection, $query_projects);
+
+    if ($arr_projects) {
+        $result = true;
+    }
+
+    return $result;
+}
+
+function isProjectExistByName($project_name, $connection, $user) {
+    $result = false;
+
+    $query_projects = 'SELECT * FROM projects WHERE user = ' . $user . ' AND title = "' . $project_name . '"';
     $arr_projects = getInfoFromDatabase($connection, $query_projects);
 
     if ($arr_projects) {
