@@ -10,8 +10,20 @@ require_once("main-data.php");
 
 $title = "Дела в порядке";
 
-if ($_SESSION['user_id']) {
+
+if (isset($_SESSION['user_id'])) {
     generateUserData($connection, $user);
+
+    if (isset($_GET['show_completed'])) {
+        $show_completed = $_GET['show_completed'] ?? false;
+        if ($show_completed !== false) {
+            $_SESSION['show_complete_tasks'] = $show_completed;
+            header("Location: /index.php");
+        }
+    } else if (!isset($_SESSION['show_complete_tasks'])) {
+        $_SESSION['show_complete_tasks'] = true;
+        header("Location: /index.php");
+    }
 
     $page_content = include_template("main.php", [
         "arr_tasks" => $arr_tasks,
@@ -94,19 +106,11 @@ if ($_SESSION['user_id']) {
             ]);
         }
     }
-
-    if (isset($_GET['show_completed'])) {
-        $show_completed = intval($_GET['show_completed']) ?? null;
-        if ($show_completed !== null) {
-            $_SESSION['show_complete_tasks'] = $show_completed;
-            header("Location: /index.php");
-        }
-    }
 } else {
     header("Location: guest.php");
     exit();
 }
 
-$layout_content = include_template("layout.php", ["content" => $page_content, "page_title" => $title, "user_name" => $user_name]);
+$layout_content = include_template("layout.php", ["content" => $page_content, "page_title" => $title, "user_name" => $user_name, "guest_page" => false]);
 
 print($layout_content);

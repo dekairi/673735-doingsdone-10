@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once("init.php");
 require_once("functions.php");
 require_once("helpers.php");
@@ -8,6 +10,11 @@ require_once("main-data.php");
 $title = "Регистрация";
 $required_fields = ["email", "password", "name"];
 $errors = [];
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: /");
+    exit();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($_POST as $key => $value) {
@@ -46,6 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $register_content = include_template("register.php", [
     "errors" => $errors
 ]);
-$layout_content = include_template("layout.php", ["content" => $register_content, "page_title" => $title]);
+$layout_content = include_template("layout.php", ["content" => $register_content, "page_title" => $title, "guest_page" => false]);
 
 print($layout_content);

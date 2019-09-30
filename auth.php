@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once("init.php");
 require_once("functions.php");
 require_once("helpers.php");
@@ -7,6 +9,11 @@ require_once("data.php");
 $title = "Авторизация";
 $required_fields = ["email", "password"];
 $errors = [];
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: /");
+    exit();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($_POST as $key => $value) {
@@ -42,6 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $auth_content = include_template("auth.php", [
     "errors" => $errors
 ]);
-$layout_content = include_template("layout.php", ["content" => $auth_content, "page_title" => $title]);
+$layout_content = include_template("layout.php", ["content" => $auth_content, "page_title" => $title, "guest_page" => false]);
 
 print($layout_content);

@@ -14,7 +14,7 @@
         </nav>
 
         <a class="button button--transparent button--plus content__side-button"
-           href="../add-project.php" target="project_add">Добавить проект</a>
+           href="add-project.php" target="project_add">Добавить проект</a>
     </section>
 
     <main class="content__main">
@@ -25,7 +25,7 @@
               <?php $classname = isset($errors["name"]) ? "form__input--error" : "";?>
             <label class="form__label" for="name">Название <sup>*</sup></label>
 
-            <input class="form__input <?=$classname; ?>" type="text" name="name" id="name" value="<?=getPostValue("name"); ?>" placeholder="Введите название">
+            <input class="form__input <?=$classname; ?>" type="text" name="name" id="name" value="<?=array_key_exists("name", $errors) ? '' : getPostValue("name"); ?>" placeholder="Введите название">
             <p class="form__message"><?=$errors["name"] ?? ""; ?></p>
           </div>
 

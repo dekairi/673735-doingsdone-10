@@ -23,13 +23,21 @@ function getTasksQuery($user) {
     return $query_tasks;
 }
 
-$arr_projects = getInfoFromDatabase($connection, getProjectsQuery($user));
-$arr_all_tasks = getInfoFromDatabase($connection, getAllTasksQuery($user));
-$arr_tasks = getInfoFromDatabase($connection, getTasksQuery($user));
+$arr_projects;
+$arr_all_tasks;
+$arr_tasks;
 
-if (count($arr_tasks) === 0) {
-    $query_tasks = 'SELECT * FROM task WHERE user = ' . $user;
-    $arr_tasks = getInfoFromDatabase($connection, $query_tasks);
+if (isset($user)) {
+    $arr_projects = getInfoFromDatabase($connection, getProjectsQuery($user));
+    $arr_all_tasks = getInfoFromDatabase($connection, getAllTasksQuery($user));
+    $arr_tasks = getInfoFromDatabase($connection, getTasksQuery($user));
+}
+
+if (isset($arr_tasks)) {
+    if (count($arr_tasks) === 0) {
+        $query_tasks = 'SELECT * FROM task WHERE user = ' . $user;
+        $arr_tasks = getInfoFromDatabase($connection, $query_tasks);
+    }
 }
 
 function generateUserData($connection, $user) {
