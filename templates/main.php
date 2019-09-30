@@ -6,7 +6,7 @@
             <ul class="main-navigation__list">
                 <?php foreach ($arr_projects as $key => $project): ?>
                     <li class="main-navigation__list-item <?=$_GET['project_id'] === $project["id"] ? "main-navigation__list-item--active" : ""?>">
-                        <a class="main-navigation__list-item-link" href="<?="/index.php?project_id=" . $project["id"]; ?>"><?=htmlspecialchars($project["title"]); ?></a>
+                        <a class="main-navigation__list-item-link" href="index.php?project_id=<?=$project["id"];?>"><?=htmlspecialchars($project["title"]); ?></a>
                         <span class="main-navigation__list-item-count"><?=getQuantityOfProjectTasks($project["id"], $arr_all_tasks); ?></span>
                     </li>
                 <?php endforeach; ?>
@@ -14,7 +14,7 @@
         </nav>
 
         <a class="button button--transparent button--plus content__side-button"
-           href="../add-project.php" target="project_add">Добавить проект</a>
+           href="add-project.php" target="project_add">Добавить проект</a>
     </section>
 
     <main class="content__main">
@@ -35,7 +35,10 @@
        </nav>
 
        <label class="checkbox">
-           <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?=(intval($_SESSION['show_complete_tasks']) == 1) ? "checked" : ""; ?>>
+           <input class="checkbox__input visually-hidden show_completed" type="checkbox"
+           <?php if (isset($_SESSION['show_complete_tasks'])): ?>
+           <?=($_SESSION['show_complete_tasks']) ? "checked" : "";?>
+            <?php endif; ?>>
            <span class="checkbox__text">Показывать выполненные</span>
        </label>
         </div>
@@ -45,7 +48,10 @@
                 <div>Ничего не найдено по вашему запросу</div>
             <?php else: ?>
             <?php foreach ($arr_tasks as $task): ?>
-                <tr class="tasks__item task <?=($task["status"]) ? "task--completed" : ""?> <?=(isTaskImportant($task["date_todo"])) ? "task--important" : ""?>" <?=($task["status"] && intval($_SESSION['show_complete_tasks']) === 0) ? "style='display:none;'" : "" ?>>
+                <tr class="tasks__item task <?=($task["status"]) ? "task--completed" : ""?> <?=(isTaskImportant($task["date_todo"])) && !$task["status"] ? "task--important" : ""?>"
+                    <?php if (isset($_SESSION['show_complete_tasks'])): ?>
+                    <?=($task["status"] && intval($_SESSION['show_complete_tasks']) === 0) ? "style='display:none;'" : "" ?>
+                    <?php endif; ?>>
                     <td class="task__select">
                         <label class="checkbox task__checkbox">
                             <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?=$task["id"];?>" <?=$task["status"] ? "checked" : "";?>>
@@ -58,7 +64,7 @@
                         <?=$task["file"] !== '/uploads/' && $task["file"] !== NULL ? '<a class="download-link" href="' . $current_file_path . '">Download</a>' : ''; ?>
                     </td>
 
-                    <td class="task__date"><?=htmlspecialchars($task["date_todo"]); ?></td>
+                    <td class="task__date"><?=date_format(date_create(htmlspecialchars($task["date_todo"])),"d.m.Y"); ?></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>

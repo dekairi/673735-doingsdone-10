@@ -9,6 +9,11 @@ $title = "Добавить задачу";
 $required_fields = ["name", "project"];
 $errors = [];
 
+if (!$_SESSION['user_id']) {
+    header("Location: guest.php");
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($required_fields as $field) {
         if (empty($_POST[$field])) {
@@ -75,10 +80,9 @@ $form_content = include_template("form.php", [
     "arr_tasks" => $arr_tasks,
     "arr_projects" => $arr_projects,
     "arr_all_tasks" => $arr_all_tasks,
-    "show_complete_tasks" => $show_complete_tasks,
     "user" => $user,
     "errors" => $errors
 ]);
-$layout_content = include_template("layout.php", ["content" => $form_content, "page_title" => $title, "user_name" => $user_name]);
+$layout_content = include_template("layout.php", ["content" => $form_content, "page_title" => $title, "user_name" => $user_name, "guest_page" => false]);
 
 print($layout_content);

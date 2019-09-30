@@ -4,6 +4,14 @@ CREATE DATABASE doingsdone
 
 USE doingsdone;
 
+CREATE TABLE `user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `register_date` datetime NOT NULL,
+  `email` char(128) NOT NULL DEFAULT '',
+  `name` char(128) NOT NULL DEFAULT '',
+  `password` text NOT NULL
+);
+
 CREATE TABLE `projects` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `title` char(255) NOT NULL DEFAULT '',
@@ -27,15 +35,6 @@ CREATE TABLE `task` (
   KEY `author` (`user`),
   CONSTRAINT `author` FOREIGN KEY (`user`) REFERENCES `user` (`id`),
   CONSTRAINT `category` FOREIGN KEY (`project`) REFERENCES `projects` (`id`)
-);
-
-
-CREATE TABLE `user` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `register_date` datetime NOT NULL,
-  `email` char(128) NOT NULL DEFAULT '',
-  `name` char(128) NOT NULL DEFAULT '',
-  `password` text NOT NULL
 );
 
 CREATE FULLTEXT INDEX task_search ON task(title);

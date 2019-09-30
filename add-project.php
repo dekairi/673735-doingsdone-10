@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once("init.php");
 require_once("functions.php");
 require_once("helpers.php");
@@ -8,6 +10,11 @@ require_once("main-data.php");
 $title = "Добавить проект";
 $required_fields = ["name"];
 $errors = [];
+
+if (!$_SESSION['user_id']) {
+    header("Location: guest.php");
+    exit();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($required_fields as $field) {
@@ -46,6 +53,6 @@ $form_content = include_template("add-project.php", [
     "user" => $user,
     "errors" => $errors
 ]);
-$layout_content = include_template("layout.php", ["content" => $form_content, "page_title" => $title, "user_name" => $user_name]);
+$layout_content = include_template("layout.php", ["content" => $form_content, "page_title" => $title, "user_name" => $user_name, "guest_page" => false]);
 
 print($layout_content);

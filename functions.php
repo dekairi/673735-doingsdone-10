@@ -49,7 +49,9 @@ function isProjectExistByName($project_name, $connection, $user) {
 }
 
 function isProjectSelected($project_id) {
-    return $_POST["project"] == $project_id;
+    if (isset($_POST["project"])) {
+        return $_POST["project"] == $project_id;
+    }
 }
 
 function getInfoFromDatabase($conn, $sql_query) {
@@ -76,8 +78,8 @@ function isTaskImportant($date_todo) {
     $result = false;
 
     $diff = getDateDifference($date_todo);
-
-    if ($diff <= 24 && $diff > 0) {
+    var_dump($diff);
+    if ($diff <= 24) {
         $result = true;
     }
 
