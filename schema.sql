@@ -1,3 +1,9 @@
+CREATE DATABASE doingsdone
+  DEFAULT CHARACTER SET utf8
+  DEFAULT COLLATE utf8_general_ci;
+
+USE doingsdone;
+
 CREATE TABLE `projects` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `title` char(255) NOT NULL DEFAULT '',
