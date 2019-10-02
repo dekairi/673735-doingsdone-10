@@ -14,7 +14,7 @@ if (!$_SESSION['user_id']) {
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     foreach ($required_fields as $field) {
         if (empty($_POST[$field])) {
             $errors[$field] = "Поле не заполнено";
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     foreach ($_POST as $key => $value) {
-        if ($key == "date" && $value != NULL) {
+        if ($key === "date" && $value !== NULL) {
             if(!is_date_valid($value)) {
                 $errors[$key] = "Введите дату в корректном формате";
             } else if (getDateDifference($value) < -24) {
@@ -30,13 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        if ($key == "name") {
-            if (strlen($_POST[$key]) == 0) {
+        if ($key === "name") {
+            if (strlen($_POST[$key]) === 0) {
                 $errors[$key] = "Длинна поля не должна быть равна нулю";
+            } else if (strlen($_POST[$key]) >= 255) {
+                $errors[$key] = "Слишком длинное название (должно быть не более 255 символов)";
             }
         }
 
-        if ($key == "project") {
+        if ($key === "project") {
             if (!isProjectExist($_POST[$key], $connection, $user)) {
                 $errors[$key] = "Проект не существует";
             }
@@ -62,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $task_name = $_POST["name"];
         $task_project = $_POST["project"];
         $task_date = empty($_POST["date"]) ? null : $_POST["date"];
-        $task_file = $file_url == "" ? null : $file_url;
+        $task_file = $file_url === "" ? null : $file_url;
 
         $query_add_task = "INSERT INTO task (date_created, status, title, file, date_todo, project, user) VALUES (NOW(), 0, ?, ?, ?, ?, ?)";
         $stmt = db_get_prepare_stmt($connection, $query_add_task, [$task_name, $task_file, $task_date, $task_project, $user]);

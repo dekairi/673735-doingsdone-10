@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require_once("init.php");
 require_once("functions.php");
 require_once("helpers.php");
@@ -15,9 +13,9 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     foreach ($_POST as $key => $value) {
-        if ($key == "email") {
+        if ($key === "email") {
             if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                 $errors[$key] = "Email должен быть корректным";
             } else if (!isEmailExist($value, $connection)) {
