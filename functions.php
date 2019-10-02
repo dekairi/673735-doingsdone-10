@@ -30,11 +30,16 @@ function changeDateFormat($date, $format)
 function isEmailExist($email, $connection) {
     $result = false;
 
-    $query_emails = 'SELECT * FROM user WHERE email = "' . $email . '"';
-    $arr_emails = getInfoFromDatabase($connection, $query_emails);
+    $query_emails = 'SELECT * FROM user WHERE email = ?';
+    $stmt = db_get_prepare_stmt($connection, $query_emails, [$email]);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
 
-    if ($arr_emails) {
-        $result = true;
+    if ($res) {
+        $arr_emails = mysqli_fetch_all($res, MYSQLI_ASSOC);
+        if (count($arr_emails) !== 0) {
+            $result = true;
+        }
     }
 
     return $result;
@@ -50,11 +55,16 @@ function isEmailExist($email, $connection) {
 function isProjectExist($project_id, $connection, $user) {
     $result = false;
 
-    $query_projects = 'SELECT * FROM projects WHERE user = ' . $user . ' AND id = ' . $project_id;
-    $arr_projects = getInfoFromDatabase($connection, $query_projects);
+    $query_projects = 'SELECT * FROM projects WHERE user = ? AND id = ?';
+    $stmt = db_get_prepare_stmt($connection, $query_projects, [$user, $project_id]);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
 
-    if ($arr_projects) {
-        $result = true;
+    if ($res) {
+        $arr_projects = mysqli_fetch_all($res, MYSQLI_ASSOC);
+        if (count($arr_projects) !== 0) {
+            $result = true;
+        }
     }
 
     return $result;
@@ -70,11 +80,16 @@ function isProjectExist($project_id, $connection, $user) {
 function isProjectExistByName($project_name, $connection, $user) {
     $result = false;
 
-    $query_projects = 'SELECT * FROM projects WHERE user = ' . $user . ' AND title = "' . $project_name . '"';
-    $arr_projects = getInfoFromDatabase($connection, $query_projects);
+    $query_projects = 'SELECT * FROM projects WHERE user = ? AND title = ?';
+    $stmt = db_get_prepare_stmt($connection, $query_projects, [$user, $project_name]);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
 
-    if ($arr_projects) {
-        $result = true;
+    if ($res) {
+        $arr_projects = mysqli_fetch_all($res, MYSQLI_ASSOC);
+        if (count($arr_projects) !== 0) {
+            $result = true;
+        }
     }
 
     return $result;
