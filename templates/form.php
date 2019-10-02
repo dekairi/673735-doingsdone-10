@@ -35,7 +35,7 @@
 
             <select class="form__input form__input--select <?=$classname; ?>" name="project" id="project">
             <?php foreach ($arr_projects as $key => $project): ?>
-                <option value="<?=$project["id"]; ?>" <?=isProjectSelected($project["id"]) ? "selected" : ""; ?>><?=$project["title"]; ?></option>
+                <option value="<?=$project["id"]; ?>" <?=isProjectSelected($project["id"]) ? "selected" : ""; ?>><?=htmlspecialchars($project["title"]); ?></option>
             <?php endforeach; ?>
             </select>
             <p class="form__message"><?=$errors["project"] ?? ""; ?></p>

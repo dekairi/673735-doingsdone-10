@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require_once("init.php");
 require_once("functions.php");
 require_once("helpers.php");
@@ -16,7 +14,7 @@ if (!$_SESSION['user_id']) {
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     foreach ($required_fields as $field) {
         if (empty($_POST[$field])) {
             $errors[$field] = "Поле не заполнено";
@@ -24,9 +22,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     foreach ($_POST as $key => $value) {
-        if ($key == "name") {
-            if (isProjectExistByName($_POST[$field], $connection, $user)) {
+        if ($key === "name") {
+            if (isProjectExistByName($_POST[$key], $connection, $user)) {
                 $errors[$key] = "Проект с таким именем уже существует";
+            } else if (strlen($_POST[$key]) >= 255) {
+                $errors[$key] = "Слишком длинное название (должно быть не более 255 символов)";
             }
         }
     }

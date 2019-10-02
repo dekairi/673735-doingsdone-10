@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require_once("init.php");
 require_once("functions.php");
 require_once("helpers.php");
@@ -73,8 +71,11 @@ if (isset($_SESSION['user_id'])) {
                     break;
             }
         }
-        $arr_filter_tasks = getInfoFromDatabase($connection, $sql_filter_tasks);
-        if ($arr_filter_tasks) {
+        if (isset($sql_filter_tasks)) {
+            $arr_filter_tasks = getInfoFromDatabase($connection, $sql_filter_tasks);
+        }
+
+        if (isset($arr_filter_tasks)) {
             $page_content = include_template("main.php", [
                 "arr_tasks" => $arr_filter_tasks,
                 "arr_projects" => $arr_projects,

@@ -29,9 +29,9 @@
         <div class="tasks-controls">
             <nav class="tasks-switch">
            <a href="/" class="tasks-switch__item <?= (!isset($_GET['filter'])) ? "tasks-switch__item--active" : ""; ?>">Все задачи</a>
-           <a href="/?filter=today" class="tasks-switch__item <?= (htmlspecialchars($_GET['filter']) == "today") ? "tasks-switch__item--active" : ""; ?>">Повестка дня</a>
-           <a href="/?filter=tomorrow" class="tasks-switch__item <?= (htmlspecialchars($_GET['filter']) == "tomorrow") ? "tasks-switch__item--active" : ""; ?>">Завтра</a>
-           <a href="/?filter=outofdate" class="tasks-switch__item <?= (htmlspecialchars($_GET['filter']) == "outofdate") ? "tasks-switch__item--active" : ""; ?>">Просроченные</a>
+           <a href="/?filter=today" class="tasks-switch__item <?= (htmlspecialchars($_GET['filter']) === "today") ? "tasks-switch__item--active" : ""; ?>">Повестка дня</a>
+           <a href="/?filter=tomorrow" class="tasks-switch__item <?= (htmlspecialchars($_GET['filter']) === "tomorrow") ? "tasks-switch__item--active" : ""; ?>">Завтра</a>
+           <a href="/?filter=outofdate" class="tasks-switch__item <?= (htmlspecialchars($_GET['filter']) === "outofdate") ? "tasks-switch__item--active" : ""; ?>">Просроченные</a>
        </nav>
 
        <label class="checkbox">
